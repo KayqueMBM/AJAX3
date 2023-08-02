@@ -48,7 +48,7 @@
 			$.ajax({
 				type: "POST",
                 url: "arquivo.php",
-				data: dados,
+				data: {"nomeDoParametro":"ValorDoParametro"},
 				dataType: 'json',
 				                
                 success: function(meu_json)
@@ -75,10 +75,11 @@
 					
 				},
 				timeout: 5000
+                
 			});
 			
 			
-		}
+		} 
 	</script>
 </body>
 </html>
