@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Alunos</title>
+    <script type="text/javascript" src="jquery-3.7.0.min.js"></script>
+</head>
+<body>
+
+<!-- 
+    Complete este programa para enviar os dados via AJAX para um arquivo PHP 
+    Em seguida faça o PHP retornar um "echo" para a função JavaScript e insira
+    uma nova linha na tabela.
+    PASSO 1) Criar o onclick NO LUGAR CERTO
+    PASSO 2) Criar a função Javascript e enviar os dados para o PHP
+    PASSO 3) Criar o PHP conforme exemplos anteriores
+    PASSO 4) Usar o exemplo do Google DOCs de como preencher uma tabela via AJAX.
+--> 
+
+    <form action="" method="post" id="form1">
+        DIGITE A MATRÍCULA: <input type="text" name="matricula">
+        <br>  <br>
+        DIGITE O NOME: <input type="text" name="nome">
+        <br>   <br>
+        
+        <button>
+            <input type="button" name="inserir" value="Inserir" onclick="Listar();" />
+        </button>
+
+    </form>
+
+    <br> <br>
+
+    <table align="center" width="400px" border="1" id="tabela1">
+        <tr>
+            <td> MATRÍCULA </td>  <td> NOME </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+	
+	
+		function Listar(){
+			var dados = $('#form1').serialize();
+
+			$.ajax({
+				type: "POST",
+                url: "arquivo.php",
+				data: dados,
+				dataType: 'json',
+				                
+                success: function(meu_json)
+				{
+					
+					var valores = meu_json;
+					var lista = valores.alunos;
+                  
+					for(x=0;x<lista.length;x++)
+					{
+						console.log(lista[x].nome);
+						console.log(lista[x].matricula);     
+						console.log("  ");
+					}
+				},
+				error: function(xhr, status, error) {
+
+            		console.error('Ocorreu um erro ao enviar os dados: ' + error);
+          		},
+				beforeSend: function(xhr) {
+					
+				},
+				complete: function(xhr, status) {
+					
+				},
+				timeout: 5000
+			});
+			
+			
+		}
+	</script>
+</body>
+</html>
