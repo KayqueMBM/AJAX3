@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Alunos</title>
     <script type="text/javascript" src="jquery-3.7.0.min.js"></script>
-</head>
-<body>
 
 <!-- 
     Complete este programa para enviar os dados via AJAX para um arquivo PHP 
@@ -19,26 +17,6 @@
     PASSO 4) Usar o exemplo do Google DOCs de como preencher uma tabela via AJAX.
 --> 
 
-    <form action="" method="post" id="form1">
-        DIGITE A MATRÍCULA: <input type="text" name="matricula">
-        <br>  <br>
-        DIGITE O NOME: <input type="text" name="nome">
-        <br>   <br>
-        
-        <button>
-            <input type="button" name="inserir" value="Inserir" onclick="Listar();" />
-        </button>
-
-    </form>
-
-    <br> <br>
-
-    <table align="center" width="400px" border="1" id="tabela1">
-        <tr>
-            <td> MATRÍCULA </td>  <td> NOME </td>
-        </tr>
-    </table>
-
     <script type="text/javascript">
 	
 	
@@ -48,7 +26,7 @@
 			$.ajax({
 				type: "POST",
                 url: "arquivo.php",
-				data: {"nomeDoParametro":"ValorDoParametro"},
+				data: dados,
 				dataType: 'json',
 				                
                 success: function(meu_json)
@@ -56,12 +34,16 @@
 					
 					var valores = meu_json;
 					var lista = valores.alunos;
-                  
+
+                    var tabela = document.getElementById("tabela1");
 					for(x=0;x<lista.length;x++)
 					{
-						console.log(lista[x].nome);
-						console.log(lista[x].matricula);     
-						console.log("  ");
+                        var numeroLinhas = tabela.rows.length
+                        var linha = tabela.insertRow(numeroLinhas);
+						var coluna1 = linha.insertCell(0);
+                        var coluna2 = linha.insertCell(1);
+                        coluna1.innerHTML = lista[x].nome;
+                        coluna2.innerHTML = lista[x].matricula;
 					}
 				},
 				error: function(xhr, status, error) {
@@ -81,5 +63,27 @@
 			
 		} 
 	</script>
+</head>
+<body>
+    <form action="" method="post" id="form1">
+        DIGITE A MATRÍCULA: <input type="text" id="matricula" name="matricula" value="" />
+        <br>  <br>
+        DIGITE O NOME: <input type="text" id="nome" name="nome" value="" />
+        <br>   <br>
+        
+    
+            <input type="button" name="inserir" value="Inserir" onclick="Listar();" />
+        
+
+    </form>
+
+    <br> <br>
+
+    <table align="center" width="400px" border="1" id="tabela1">
+        <tr>
+            <td> MATRÍCULA </td>  <td> NOME </td>
+        </tr>
+    </table>
+
 </body>
 </html>
